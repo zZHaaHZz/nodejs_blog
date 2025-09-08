@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+h1 {
+    color: $red-color-1;
+    text-align: center;
+}
+a {
+    color: $red-color-1;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.card-courses{
+  margin: 40px 10px;
+}
+.row{
+  justify-content: center;
+}

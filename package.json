@@ -1,0 +1,40 @@
+{
+  "name": "jnodejs_blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "wt": "sass --watch src/sources/scss/app.scss src/public/css/app.css",
+    "bf": "prettier --single-quote --trailing-comma all --tab-width 4 --write 'src/**/*.{js,json,scss}'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zZHaaHZz/nodejs_blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "zZHaaHZz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zZHaaHZz/nodejs_blog/issues"
+  },
+  "homepage": "https://github.com/zZHaaHZz/nodejs_blog#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "sass": "^1.91.0",
+    "handlebars": "^4.2.5"
+  }
+}
