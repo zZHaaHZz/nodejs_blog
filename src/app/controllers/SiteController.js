@@ -1,14 +1,9 @@
 const Course = require('../models/course');
+const {mutipleMongooseToObject} = require("../../util/mogoose");
 
 class SiteController {
     index(req, res, next) {
-        Course.find({})
-            .then(courses => {
-                courses = courses.map(course => course.toObject()) ;
-                res.render('home', {courses})
-            })
-
-            .catch(err => res.status(500).json({ error: "Lỗi khi lấy dữ liệu" }));
+        res.render('home');
     }
     search(req, res) {
         res.render('search');

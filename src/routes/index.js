@@ -1,7 +1,9 @@
 const express = require('express/lib/express');
 
 const newRouter = require('./news');
-const movieController = require('./movie');
+
+const Khoa_hocRouter = require('./khoa_hoc');
+
 const siteRouter = require('./site');
 
 function route(app) {
@@ -11,10 +13,11 @@ function route(app) {
     //         res.render('home'); // render file home.hbs trong thư mục views
     //     });
 
-    // Route GET "/news" => khi vào http://localhost:3000/news
+    // router
     app.use('/news', newRouter);
-    // Router GET movie
-    app.use('/movie', movieController);
+
+    app.use('/khoa_hoc', Khoa_hocRouter);
+
     app.use('/', siteRouter);
 }
 

@@ -1,0 +1,18 @@
+<h1>Thêm khóa học mới</h1>
+<form method="POST" action="/khoa_hoc/store">
+    <div class="mb-3">
+        <label for="courseName" class="form-label">Tên khóa học</label>
+        <input type="text" class="form-control" id="courseName" name="name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="courseDescription" class="form-label">Mô tả</label>
+        <input type="text" class="form-control" id="courseDescription" name="description">
+    </div>
+
+    <div class="mb-3">
+        <label for="courseVideo" class="form-label">Video (URL)</label>
+        <input type="text" class="form-control" id="courseVideo" name="video">
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm khóa học</button>
+</form>
