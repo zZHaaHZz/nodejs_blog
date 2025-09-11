@@ -3,7 +3,7 @@ const path = require('path'); // Module built-in của Node.js để xử lý đ
 const express = require('express'); // Framework Express để xây dựng web server
 const morgan = require('morgan'); // Middleware log request ra console (dùng cho debug)
 const { engine } = require('express-handlebars'); // Import engine() từ express-handlebars để cấu hình view engine
-
+const methodOverride = require('method-override');
 const app = express(); // Tạo ứng dụng Express
 const port = 3000; // Đặt port cho server
 
@@ -21,9 +21,14 @@ app.use(express.json());
 app.engine(
     'hbs',
     engine({
-        extname: '.hbs', // Mặc định Handlebars dùng .handlebars, mình đổi sang .hbs cho ngắn gọn
+        extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     }),
 );
+
+app.use(methodOverride('_method'));
 
 // Thiết lập view engine mặc định là "hbs"
 app.set('view engine', 'hbs');

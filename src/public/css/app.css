@@ -6,13 +6,17 @@ body {
   background: #f9f9f9;
 }
 
+.bg-pink {
+  background-color: #de7fc0 !important; /* Màu hồng */
+}
+
 h1 {
-  color: #FF34B3;
+  color: #de7fc0;
   text-align: center;
 }
 
 a {
-  color: #FF34B3;
+  color: #de7fc0;
   text-decoration: none;
 }
 

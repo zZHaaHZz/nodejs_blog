@@ -4,16 +4,16 @@
 
         {{#each courses}}
             <div class="card card-courses" style="width: 18rem;">
-                <a href="/khoa_hoc/{{this.slug}}">
+                <a href="/course/{{this.slug}}">
                     <img src="{{this.img}}" class="card-img-top" alt="..." width="200" height="150" style="object-fit: cover; margin-top: 5px">
                 </a>
                 <div class="card-body">
-                    <a href="/khoa_hoc/{{this.slug}}">
+                    <a href="/course/{{this.slug}}">
                         <h5 class="card-title">{{this.name}}</h5>
                     </a>
                     <p class="card-text">{{this.description}} </p>
                 </div>
-                <a href="/khoa_hoc/{{this.slug}}" class="btn btn-primary" style="margin-bottom: 5px; width: 100px;">Tham gia</a>
+                <a href="/course/{{this.slug}}" class="btn btn-primary" style="margin-bottom: 5px; width: 100px;">Tham gia</a>
             </div>
         {{/each}}
 

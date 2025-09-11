@@ -1,5 +1,5 @@
 const Course = require('../models/course');
-const {mutipleMongooseToObject} = require("../../util/mogoose");
+const { mutipleMongooseToObject } = require('../../util/mogoose');
 
 class SiteController {
     index(req, res, next) {
