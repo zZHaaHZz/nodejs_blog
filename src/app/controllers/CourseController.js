@@ -60,7 +60,7 @@ class CourseController {
             await course.save();
 
             // Redirect về danh sách khóa học
-            res.redirect('/course');
+            res.redirect('/me/stored/course');
         } catch (err) {
             next(err); // để Express xử lý lỗi
         }
@@ -83,8 +83,22 @@ class CourseController {
     }
 
     delete(req, res, next) {
+        Course.delete({ _id: req.params.id })
+            .then(() => res.redirect('/me/stored/courses'))
+            .catch(next);
+    }
+
+    // Khôi phục
+    restore(req, res, next) {
+        Course.restore({ _id: req.params.id }) // nếu dùng mongoose-delete
+            .then(() => res.redirect('/me/stored/courses'))
+            .catch(next);
+    }
+
+    // Xoá vĩnh viễn
+    forceDelete(req, res, next) {
         Course.deleteOne({ _id: req.params.id })
-            .then(() => res.redirect('/me/stored/course'))
+            .then(() => res.redirect('/me/trash/courses'))
             .catch(next);
     }
 }

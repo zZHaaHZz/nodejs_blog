@@ -14,6 +14,10 @@ router.put('/:id', CourseController.update);
 
 router.delete('/:id/delete', CourseController.delete);
 
+router.delete('/:id/force', CourseController.forceDelete);
+
+router.patch('/:id/restore', CourseController.restore);
+
 router.get('/', CourseController.index);
 
 module.exports = router;

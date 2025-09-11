@@ -14,6 +14,17 @@ class MeController {
                 res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' }),
             );
     }
+    trash(req, res, next) {
+        Course.findDeleted({})
+            .then((courses) => {
+                res.render('./me/course_trash', {
+                    courses: mutipleMongooseToObject(courses),
+                });
+            })
+            .catch((err) =>
+                res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' }),
+            );
+    }
 }
 
 module.exports = new MeController();

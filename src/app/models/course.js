@@ -13,6 +13,11 @@ const CourseSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
+
+
 mongoose.plugin(slug);
-CourseSchema.plugin(mongooseDelete);
+CourseSchema.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: 'all'});
+
 module.exports = mongoose.model('Course', CourseSchema);

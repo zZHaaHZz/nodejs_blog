@@ -4,7 +4,9 @@ const router = express.Router();
 
 const MeController = require('../app/controllers/MeController');
 
-router.get('/stored/course', MeController.index);
+router.get('/stored/courses', MeController.index);
+
+router.get('/trash/courses', MeController.trash);
 
 router.get('/', MeController.index);
 
