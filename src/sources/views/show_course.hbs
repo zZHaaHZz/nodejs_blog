@@ -15,9 +15,11 @@
                 </div>
                 <a href="/course/{{this.slug}}" class="btn btn-primary" style="margin-bottom: 5px; width: 100px;">Tham gia</a>
             </div>
+        {{else}}
+            <div class="text-center mt-4">
+                <p>Hiện tại không có khóa học nào</p>
+                <a href="/course/create" class="btn btn-primary">Thêm khóa học</a>
+            </div>
         {{/each}}
-
     </div>
-    </div>
-</div>
 </div>

@@ -60,7 +60,7 @@ class CourseController {
             await course.save();
 
             // Redirect về danh sách khóa học
-            res.redirect('/me/stored/course');
+            res.redirect('/me/stored/courses');
         } catch (err) {
             next(err); // để Express xử lý lỗi
         }
@@ -90,8 +90,8 @@ class CourseController {
 
     // Khôi phục
     restore(req, res, next) {
-        Course.restore({ _id: req.params.id }) // nếu dùng mongoose-delete
-            .then(() => res.redirect('/me/stored/courses'))
+        Course.restore({ _id: req.params.id })
+            .then(() => res.redirect('/me/trash/courses'))
             .catch(next);
     }
 
@@ -100,6 +100,28 @@ class CourseController {
         Course.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('/me/trash/courses'))
             .catch(next);
+    }
+
+    actionHbs(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                Course.delete({ _id: {$in: req.body.courseIds}})
+                    .then(() => res.redirect('/me/stored/courses'))
+                    .catch(next);
+                break;
+            case 'restores':
+                Course.restore({ _id: {$in: req.body.courseIds} })
+                    .then(() => res.redirect('/me/trash/courses'))
+                    .catch(next);
+                break;
+            case 'forceDelete':
+                Course.deleteOne({  _id: {$in: req.body.courseIds}  })
+                    .then(() => res.redirect('/me/trash/courses'))
+                    .catch(next);
+                break;
+            default:
+                break;
+        }
     }
 }
 

@@ -4,27 +4,29 @@ const { mutipleMongooseToObject } = require('../../util/mogoose');
 
 class MeController {
     index(req, res, next) {
-        Course.find({})
-            .then((courses) => {
+        Promise.all([
+            Course.find({}),
+            Course.countDocumentsWithDeleted({ deleted: true })
+        ])
+            .then(([courses, deletedCount]) => {
                 res.render('./me/course_me', {
+                    deletedCount,
                     courses: mutipleMongooseToObject(courses),
                 });
             })
-            .catch((err) =>
-                res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' }),
-            );
+            .catch(next);
     }
+
     trash(req, res, next) {
-        Course.findDeleted({})
-            .then((courses) => {
-                res.render('./me/course_trash', {
+        Course.findWithDeleted({deleted:true}) // chỉ lấy các record deleted = true
+            .then(courses => {
+                res.render('me/course_trash', {
                     courses: mutipleMongooseToObject(courses),
                 });
             })
-            .catch((err) =>
-                res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' }),
-            );
+            .catch(next);
     }
+
 }
 
 module.exports = new MeController();
