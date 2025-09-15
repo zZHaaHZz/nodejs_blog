@@ -12,7 +12,7 @@ const CourseSchema = new Schema(
         slug: { type: String, unique: true }, // tự tạo ở middleware
         video: { type: String, maxlength: 255 },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 // Middleware tạo slug trước khi lưu

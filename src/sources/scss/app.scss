@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 body {
     font-family: Arial, sans-serif;
@@ -94,7 +95,7 @@ a:hover {
 button a {
     color: #fff;
 }
-.checkbox-select-all-option{
-  width: 180px;
-  margin: 0 10px;
+.checkbox-select-all-option {
+    width: 180px;
+    margin: 0 10px;
 }

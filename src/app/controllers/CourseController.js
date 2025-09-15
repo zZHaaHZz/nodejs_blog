@@ -105,17 +105,17 @@ class CourseController {
     actionHbs(req, res, next) {
         switch (req.body.action) {
             case 'delete':
-                Course.delete({ _id: {$in: req.body.courseIds}})
+                Course.delete({ _id: { $in: req.body.courseIds } })
                     .then(() => res.redirect('/me/stored/courses'))
                     .catch(next);
                 break;
             case 'restores':
-                Course.restore({ _id: {$in: req.body.courseIds} })
+                Course.restore({ _id: { $in: req.body.courseIds } })
                     .then(() => res.redirect('/me/trash/courses'))
                     .catch(next);
                 break;
             case 'forceDelete':
-                Course.deleteOne({  _id: {$in: req.body.courseIds}  })
+                Course.deleteOne({ _id: { $in: req.body.courseIds } })
                     .then(() => res.redirect('/me/trash/courses'))
                     .catch(next);
                 break;

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 body {
   font-family: Arial, sans-serif;
   margin: 0;
