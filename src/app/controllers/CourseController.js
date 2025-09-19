@@ -31,7 +31,7 @@ class CourseController {
                 res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' }),
             );
     }
-
+    // trang quan ly khoa hoc
     show(req, res, next) {
         Course.findOne({ slug: req.params.slug })
             .then((course) => {
@@ -41,30 +41,31 @@ class CourseController {
             })
             .catch(next);
     }
+    // tao khoa hoc
     create(req, res, next) {
         res.render('./course/create');
     }
+
     async store(req, res, next) {
         try {
             const formData = req.body;
 
-            // Tạo thumbnail từ video nếu chưa có
             if (!formData.img && formData.video) {
                 formData.img = `https://img.youtube.com/vi/${formData.video}/hqdefault.jpg`;
             }
 
-            // Tạo slug duy nhất từ name
             formData.slug = await generateUniqueSlug(formData.name);
 
             const course = new Course(formData);
             await course.save();
 
-            // Redirect về danh sách khóa học
             res.redirect('/me/stored/courses');
         } catch (err) {
-            next(err); // để Express xử lý lỗi
+            next(err);
         }
     }
+
+
     // [GET] //khoa_hoc/:id/edit
     edit(req, res, next) {
         Course.findById(req.params.id)
@@ -78,7 +79,7 @@ class CourseController {
 
     update(req, res, next) {
         Course.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/me/stored/course'))
+            .then(() => res.redirect('/me/stored/courses'))
             .catch(next);
     }
 
@@ -115,10 +116,11 @@ class CourseController {
                     .catch(next);
                 break;
             case 'forceDelete':
-                Course.deleteOne({ _id: { $in: req.body.courseIds } })
+                Course.deleteMany({ _id: { $in: req.body.courseIds } })
                     .then(() => res.redirect('/me/trash/courses'))
                     .catch(next);
                 break;
+
             default:
                 break;
         }

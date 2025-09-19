@@ -1,0 +1,112 @@
+Table users {
+  id int [primary key]
+  email varchar
+  username varchar
+  password varchar
+  role int
+  avatar varchar
+  phone int
+  created_at datetime
+  updated_at datetime
+}
+
+table categories{
+  id int [primary key]
+  name varchar
+  image text
+}
+
+table products{
+  id int [primary key]
+  name varchar
+  image text
+  price int
+  oldprice int
+  description text
+  specification text
+  buyturn int
+  quantity int
+  brand_id int
+  category_id int
+  created_at datetime
+  updated_at datetime
+}
+table brands{
+  id int [primary key]
+  name varchar
+  image text
+}
+table feedbacks{
+  id int [pk]
+  product_id int
+  user_id int
+  start int
+  content text
+  created_at datetime
+  updated_at datetime
+}
+ref: "categories"."id" < "products"."category_id"
+ref: "brands"."id" < "products"."brand_id"
+ref: "products"."id" < "feedbacks"."product_id"
+ref: "users"."id" < "feedbacks"."user_id"
+
+table orders{
+  id int [pk]
+  user_id int
+  status int
+  note text
+  total int
+  created_at datetime
+  updated_at datetime
+}
+ref: "users"."id" < "orders"."user_id"
+
+table orders_details{
+  id int [pk]
+  order_id int
+  product_id int
+  price int
+  quantity int
+  created_at datetime
+  updated_at datetime
+}
+ref: "orders"."id" > "orders_details"."order_id"
+table news{
+  id int [pk]
+  title text
+  image text
+  content text
+  created_at datetime
+  updated_at datetime
+}
+
+table news_details{
+  id int [pk]
+  product_id int
+  news_id int
+  created_at datetime
+  updated_at datetime
+}
+ref: "news"."id" > "news_details"."news_id"
+ref: "products"."id" > "orders_details"."product_id"
+ref: "products"."id" > "news_details"."product_id"
+
+table banner{
+   id int [pk]
+   name text
+   image text
+   status int
+  reated_at datetime
+  updated_at datetime
+}
+
+table banner_details{
+  id int [pk]
+  product_id int
+  banner_id int
+  created_at datetime
+  updated_at datetime
+}
+ref: "products"."id" > "banner_details"."product_id"
+ref: "banner"."id" > "banner_details"."banner_id"
+

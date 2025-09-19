@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Quản Lý Bán Hàng</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><i class="fas fa-store"></i> <span>ShopAdmin</span></h2>
+        </div>
+        <nav class="nav-menu">
+            <a href="#">
+            <div class="nav-item" data-section="dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </div>
+            </a>
+            <a href="">
+            <div class="nav-item" data-section="products">
+                <i class="fas fa-box"></i>
+                <span>Sản phẩm</span>
+            </div>
+            </a>
+            <a href="">
+            <div class="nav-item" data-section="orders">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Đơn hàng</span>
+            </div>
+            </a>
+            <a href="">
+            <div class="nav-item" data-section="customers">
+                <i class="fas fa-users"></i>
+                <span>Khách hàng</span>
+            </div>
+            </a>
+            <a href="">
+            <div class="nav-item" data-section="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>Thống kê</span>
+            </div>
+            </a>
+            <a href="">
+            <div class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Cài đặt</span>
+            </div>
+            </a>
+            <a href="/sell/show">
+            <div class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Trang ban hang</span>
+            </div>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="page-title">Dashboard Tổng Quan</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary">
+                    <i class="fas fa-bell"></i>
+                    Thông báo
+                </button>
+                <button class="btn btn-primary" id="add-product-btn">
+                    <i class="fas fa-plus"></i>
+                    Thêm sản phẩm
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="section">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-value">1,247</div>
+                    <div class="stat-label">Đơn hàng hôm nay</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-value">₫45.2M</div>
+                    <div class="stat-label">Doanh thu tháng</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-value">3,847</div>
+                    <div class="stat-label">Sản phẩm</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value">12,439</div>
+                    <div class="stat-label">Khách hàng</div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Đơn hàng gần đây</h3>
+                    <button class="btn btn-secondary">Xem tất cả</button>
+                </div>
+                <div class="section-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#ORD-001</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>iPhone 15 Pro Max</td>
+                            <td>₫32,990,000</td>
+                            <td><span class="status-badge status-success">Hoàn thành</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-002</td>
+                            <td>Trần Thị B</td>
+                            <td>Samsung Galaxy S24</td>
+                            <td>₫25,990,000</td>
+                            <td><span class="status-badge status-warning">Đang xử lý</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-003</td>
+                            <td>Lê Văn C</td>
+                            <td>MacBook Pro 16"</td>
+                            <td>₫65,990,000</td>
+                            <td><span class="status-badge status-danger">Hủy</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sales Chart -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Biểu đồ doanh thu</h3>
+                </div>
+                <div class="section-content">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            &nbsp; Biểu đồ doanh thu 7 ngày qua
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products-section" class="section" style="display: none;">
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Quản lý sản phẩm</h3>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Thêm sản phẩm
+                    </button>
+                </div>
+                <div class="section-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div style="width: 50px; height: 50px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-mobile-alt" style="color: #9ca3af;"></i>
+                                </div>
+                            </td>
+                            <td>iPhone 15 Pro Max</td>
+                            <td>Điện thoại</td>
+                            <td>₫32,990,000</td>
+                            <td>25</td>
+                            <td><span class="status-badge status-success">Còn hàng</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 50px; height: 50px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-laptop" style="color: #9ca3af;"></i>
+                                </div>
+                            </td>
+                            <td>MacBook Pro 16"</td>
+                            <td>Laptop</td>
+                            <td>₫65,990,000</td>
+                            <td>8</td>
+                            <td><span class="status-badge status-warning">Sắp hết</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders-section" class="section" style="display: none;">
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Quản lý đơn hàng</h3>
+                    <div>
+                        <select class="form-input" style="width: auto; margin-right: 1rem;">
+                            <option>Tất cả trạng thái</option>
+                            <option>Chờ xác nhận</option>
+                            <option>Đang xử lý</option>
+                            <option>Đang giao</option>
+                            <option>Hoàn thành</option>
+                            <option>Hủy</option>
+                        </select>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-filter"></i>
+                            Lọc
+                        </button>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Ngày đặt</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thanh toán</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#ORD-001</td>
+                            <td>15/09/2025</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>₫32,990,000</td>
+                            <td><span class="status-badge status-success">Hoàn thành</span></td>
+                            <td><span class="status-badge status-success">Đã thanh toán</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Section -->
+        <div id="customers-section" class="section" style="display: none;">
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Quản lý khách hàng</h3>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Thêm khách hàng
+                    </button>
+                </div>
+                <div class="section-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Tên khách hàng</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày đăng ký</th>
+                            <th>Tổng đơn hàng</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>nguyenvana@email.com</td>
+                            <td>0123456789</td>
+                            <td>01/09/2025</td>
+                            <td>5</td>
+                            <td><span class="status-badge status-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics-section" class="section" style="display: none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-value">+15.3%</div>
+                    <div class="stat-label">Tăng trưởng doanh thu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-value">24,589</div>
+                    <div class="stat-label">Lượt xem sản phẩm</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-value">3.2%</div>
+                    <div class="stat-label">Tỷ lệ chuyển đổi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value">4.8</div>
+                    <div class="stat-label">Đánh giá trung bình</div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Báo cáo chi tiết</h3>
+                </div>
+                <div class="section-content">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            &nbsp; Biểu đồ phân tích doanh số theo danh mục
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings-section" class="section" style="display: none;">
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Cài đặt hệ thống</h3>
+                </div>
+                <div class="section-content">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Tên cửa hàng</label>
+                            <input type="text" class="form-input" value="ShopAdmin Store" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form

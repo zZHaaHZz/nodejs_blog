@@ -1,11 +1,31 @@
 const mongoose = require('mongoose');
+const mysql = require('mysql2/promise'); // dùng promise cho async/await
 
-async function connectDB() {
+async function connectMongo() {
     try {
         await mongoose.connect('mongodb://127.0.0.1/blog');
         console.log('MongoDB Connected!');
     } catch (err) {
-        console.log('MongoDB Connected false!');
+        console.log('MongoDB Connected false!', err);
     }
 }
-module.exports = { connectDB: connectDB };
+
+async function connectMySQL() {
+    try {
+        const connection = await mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'blog',
+            port: 3307
+        });
+        console.log('MySQL Connected!');
+        return connection;
+    } catch (err) {
+        console.log('MySQL Connected false!', err);
+    }
+}
+
+
+
+module.exports = { connectMongo, connectMySQL };

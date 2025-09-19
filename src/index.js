@@ -1,25 +1,32 @@
 // Import các module cần thiết
-const path = require('path'); // Module built-in của Node.js để xử lý đường dẫn
-const express = require('express'); // Framework Express để xây dựng web server
-const morgan = require('morgan'); // Middleware log request ra console (dùng cho debug)
-const { engine } = require('express-handlebars'); // Import engine() từ express-handlebars để cấu hình view engine
+const path = require('path');
+const express = require('express');
+const morgan = require('morgan');
+const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
-const app = express(); // Tạo ứng dụng Express
-const port = 3000; // Đặt port cho server
+const app = express();
+
+const port = 3000;
+
 const hostname = 'localhost';
 const route = require('./routes');
 const db = require('./config/db');
 
 const SortMiddlewares = require('./app/middlewares/SortMiddlewares');
 
-db.connectDB();
-// Middleware phục vụ file tĩnh (CSS, JS, ảnh...) trong thư mục "public"
+// -------------------- DB -------------------- //
+db.connectMongo();
+// db.connectMySQL();
+
+// -------------------- Middleware -------------------- //
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
+app.use(SortMiddlewares);
 
 // -------------------- Template engine -------------------- //
-// Đăng ký Handlebars làm view engine với extension .hbs
+// Handlebars (.hbs)
 app.engine(
     'hbs',
     engine({
@@ -27,39 +34,46 @@ app.engine(
         helpers: {
             sum: (a, b) => a + b,
             sorttable: (field, sort) => {
-                const sortTyle = field === sort.colum ? sort.type : 'default';
-                const icons ={
+                const icons = {
                     default: 'bi bi-funnel-fill',
-                    asc: 'bi bi-sort-down',
-                    desc: 'bi bi-sort-down-alt',
+                    asc: 'bi bi-sort-up-alt',
+                    desc: 'bi bi-sort-up',
                 };
                 const types = {
                     default: 'desc',
                     asc: 'desc',
                     desc: 'asc',
                 };
-                const icon = icons[sortTyle];
-                const type = types[sortTyle];
-                return `<a href="?_sort&colum=${field}&type=${type}">
-                <span class="${icon}"></span>
-            </a>`;},
+                const isSorted = sort.colum === field;
+                const sortType =
+                    isSorted && ['asc', 'desc'].includes(sort.type)
+                        ? sort.type
+                        : 'default';
+                const icon = icons[sortType];
+                const nextType = types[sortType];
+
+                return `
+                    <a href="?_sort&colum=${field}&type=${nextType}">
+                        <span class="${icon}"></span>
+                    </a>`;
+            },
         },
     }),
 );
 
-app.use(methodOverride('_method'));
+// EJS (.ejs) → Express hỗ trợ sẵn, không cần app.engine
 
-app.use(SortMiddlewares);
+// -------------------- Views -------------------- //
+app.set('views', path.join(__dirname, 'sources/views'));
 
-// Thiết lập view engine mặc định là "hbs"
+// ❌ KHÔNG set 2 cái view engine mặc định
+// chỉ set 1 cái chính (ví dụ hbs)
 app.set('view engine', 'hbs');
 
-// Thiết lập thư mục chứa các file view (template)
-app.set('views', path.join(__dirname, 'sources', 'views'));
-
+// -------------------- Routes -------------------- //
 route(app);
+
 // -------------------- Start server -------------------- //
-// Khởi động server tại port 3000
 app.listen(port, hostname, () => {
     console.log(`Server đang chạy tại http://${hostname}:${port}`);
 });

@@ -7,9 +7,13 @@ class MeController {
         let courseQuery = Course.find({});
 
         if ('_sort' in req.query) {
-            const sortType = req.query.type === 'desc' ? -1 : 1;
+            // kiểm tra type có hợp lệ không
+            const type = ['asc', 'desc'].includes(req.query.type)
+                ? req.query.type
+                : 'desc'; // mặc định desc
+
             courseQuery = courseQuery.sort({
-                [req.query.colum]: sortType,
+                [req.query.colum]: type,
             });
         }
 
@@ -27,7 +31,18 @@ class MeController {
     }
 
     trash(req, res, next) {
-        Course.findWithDeleted({ deleted: true }) // chỉ lấy các record deleted = true
+        let courseQuery = Course.findWithDeleted({ deleted: true });
+
+        if ('_sort' in req.query) {
+            const field = req.query.colum;
+            const type = ['asc', 'desc'].includes(req.query.type)
+                ? req.query.type
+                : 'desc';
+
+            courseQuery = courseQuery.sort({ [field]: type });
+        }
+
+        courseQuery
             .then((courses) => {
                 res.render('me/course_trash', {
                     courses: mutipleMongooseToObject(courses),

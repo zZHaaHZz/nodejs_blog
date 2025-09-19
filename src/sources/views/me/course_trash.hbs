@@ -21,9 +21,13 @@
         <thead>
         <tr>
             <th scope="col" colspan="2">#</th>
-            <th scope="col">Tên</th>
+            <th scope="col">Tên khoa hoc
+                {{{sorttable 'name' _sort}}}
+            </th>
             <th scope="col">Mô tả</th>
-            <th scope="col">Thời gian tạo</th>
+            <th scope="col">Thời gian tạo
+                {{{sorttable 'createdAt' _sort}}}
+            </th>
             <th scope="col">Hành động</th>
         </tr>
         </thead>
