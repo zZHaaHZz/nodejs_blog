@@ -16,7 +16,7 @@ async function connectMySQL() {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'blog',
+            database: 'sellphone',
             port: 3307
         });
         console.log('MySQL Connected!');

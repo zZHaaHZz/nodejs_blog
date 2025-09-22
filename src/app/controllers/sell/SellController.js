@@ -1,13 +1,10 @@
 class SellController {
-    show(req, res) {
-        res.render('sell/sell_layout/sell.ejs');
-        // => trỏ tới src/sources/views/sell/sell_layout/sell.ejs
+    index(req, res) {
+        // Trỏ trực tiếp tới layout/sell.ejs
+        res.render('layouts/main');
+        // src/sources/views/layouts/sell.ejs
     }
 
-    admin(req, res) {
-        res.render('sell/sell_layout/sell_admin.ejs');
-        // => trỏ tới src/sources/views/sell/sell_layout/sell_admin.ejs
-    }
 }
 
 module.exports = new SellController();

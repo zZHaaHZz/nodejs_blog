@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
+        .btn-outline-primary:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-outline-danger {
+            background: transparent;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .btn-outline-danger:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-outline-info {
+            background: transparent;
+            color: #17a2b8;
+            border: 1px solid #17a2b8;
+        }
+
+        .btn-outline-info:hover {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card.primary { border-left-color: #3498db; }
+        .stat-card.success { border-left-color: #27ae60; }
+        .stat-card.warning { border-left-color: #f39c12; }
+        .stat-card.danger { border-left-color: #e74c3c; }
+
+        .stat-title {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .stat-value.primary { color: #3498db; }
+        .stat-value.success { color: #27ae60; }
+        .stat-value.warning { color: #f39c12; }
+        .stat-value.danger { color: #e74c3c; }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+        }
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .product-sku {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-light {
+            background: #f8f9fa;
+            color: #495057;
+        }
+
+        .price {
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .quantity-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .quantity-high {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .quantity-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .quantity-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .pagination-info {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #495057;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #f8f9fa;
+            border-color: #adb5bd;
+        }
+
+        .pagination button.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .pagination button:disabled {
+            background: #f8f9fa;
+            color: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .table th,
+            .table td {
+                padding: 10px 8px;
+                font-size: 14px;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .pagination-container {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <h1>Quản lý sản phẩm</h1>
+            <div class="header-actions">
+                <input type="text" class="search-input" placeholder="Tìm kiếm sản phẩm..." id="searchInput">
+                <a href="/admin/products/create">
+                    <button class="btn btn-primary">
+                        + Thêm sản phẩm
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Thống kê -->
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-title">Tổng sản phẩm</div>
+                <div class="stat-value primary" id="totalProducts">50</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-title">Còn hàng</div>
+                <div class="stat-value success">42</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-title">Sắp hết</div>
+                <div class="stat-value warning">5</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-title">Hết hàng</div>
+                <div class="stat-value danger">3</div>
+            </div>
+        </div>
+
+        <!-- Bảng sản phẩm -->
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        <input type="checkbox" class="checkbox" id="selectAll">
+                    </th>
+                    <th style="width: 60px;">ID</th>
+                    <th style="width: 80px;">Hình ảnh</th>
+                    <th style="width: 300px;">Tên sản phẩm</th>
+                    <th style="width: 150px;">Danh mục</th>
+                    <th style="width: 150px;">Giá</th>
+                    <th style="width: 100px;">Số lượng</th>
+                    <th style="width: 120px;">Trạng thái</th>
+                    <th style="width: 180px;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody id="productTableBody">
+                <!-- Dữ liệu sẽ được render ở đây -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination-container">
+            <div class="pagination-info">
+                Hiển thị <span id="showingFrom">1</span> đến <span id="showingTo">10</span> của <span id="totalItems">50</span> sản phẩm
+            </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination sẽ được render ở đây -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Dữ liệu mẫu sản phẩm đơn giản
+    const products = [];
+
+    // Tạo 50 sản phẩm mẫu đơn giản
+    for (let i = 1; i <= 50; i++) {
+        const categories = ['Điện thoại', 'Laptop', 'Máy tính bảng', 'Phụ kiện', 'Tai nghe'];
+        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+        const randomPrice = Math.floor(Math.random() * 20000000) + 5000000;
+        const randomQuantity = Math.floor(Math.random() * 50);
+
+        let status = 'active';
+        if (randomQuantity === 0) status = 'out_of_stock';
+        else if (randomQuantity < 5) status = 'low_stock';
+
+        products.push({
+            id: i,
+            name: `Sản phẩm ${i}`,
+            category: randomCategory,
+            price: randomPrice,
+            quantity: randomQuantity,
+            status: status,
+            image: `data:image/jpeg;base64,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`
+        });
+    }
+
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    let filteredProducts = products;
+
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN').format(price) + ' VNĐ';
+    }
+
+    function getStatusBadge(status, quantity) {
+        switch (status) {
+            case 'active':
+                return quantity > 10 ?
+                    '<span class="badge badge-success">Còn hàng</span>' :
+                    '<span class="badge badge-warning">Sắp hết</span>';
+            case 'low_stock':
+                return '<span class="badge badge-warning">Sắp hết</span>';
+            case 'out_of_stock':
+                return '<span class="badge badge-danger">Hết hàng</span>';
+            default:
+                return '<span class="badge badge-light">Không xác định</span>';
+        }
+    }
+
+    function getQuantityBadge(quantity) {
+        let className = 'quantity-high';
+        if (quantity === 0) className = 'quantity-low';
+        else if (quantity < 10) className = 'quantity-medium';
+
+        return `<span class="quantity-badge ${className}">${quantity}</span>`;
+    }
+
+    function renderProducts() {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageProducts = filteredProducts.slice(start, end);
+
+        const tbody = document.getElementById('productTableBody');
+        tbody.innerHTML = '';
+
+        pageProducts.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="checkbox product-checkbox" value="${product.id}">
+                    </td>
+                    <td><strong>${product.id}</strong></td>
+                    <td>
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                    </td>
+                    <td>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-sku">SKU: SP${String(product.id).padStart(4, '0')}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge badge-light">${product.category}</span>
+                    </td>
+                    <td class="price">${formatPrice(product.price)}</td>
+                    <td>${getQuantityBadge(product.quantity)}</td>
+                    <td>${getStatusBadge(product.status, product.quantity)}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-outline-primary btn-sm" onclick="editProduct(${product.id})" title="Sửa">
+                                Sửa
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" onclick="viewProduct(${product.id})" title="Xem">
+                                Xem
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteProduct(${product.id})" title="Xóa">
+                                Xóa
+                            </button>
+                        </div>
+                    </td>
+                `;
+            tbody.appendChild(row);
+        });
+
+        updatePaginationInfo();
+        renderPagination();
+    }
+
+    function updatePaginationInfo() {
+        const start = Math.min((currentPage - 1) * itemsPerPage + 1, filteredProducts.length);
+        const end = Math.min(currentPage * itemsPerPage, filteredProducts.length);
+
+        document.getElementById('showingFrom').textContent = start;
+        document.getElementById('showingTo').textContent = end;
+        document.getElementById('totalItems').textContent = filteredProducts.length;
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        // Previous button
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = 'Trước';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => changePage(currentPage - 1);
+        pagination.appendChild(prevBtn);
+
+        // Page numbers
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+
+        if (startPage > 1) {
+            const firstBtn = document.createElement('button');
+            firstBtn.textContent = '1';
+            firstBtn.onclick = () => changePage(1);
+            pagination.appendChild(firstBtn);
+
+            if (startPage > 2) {
+                const dotsSpan = document.createElement('span');
+                dotsSpan.textContent = '...';
+                dotsSpan.style.padding = '8px';
+                pagination.appendChild(dotsSpan);
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            btn.className = i === currentPage ? 'active' : '';
+            btn.onclick = () => changePage(i);
+            pagination.appendChild(btn);
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const dotsSpan = document.createElement('span');
+                dotsSpan.textContent = '...';
+                dotsSpan.style.padding = '8px';
+                pagination.appendChild(dotsSpan);
+            }
+
+            const lastBtn = document.createElement('button');
+            lastBtn.textContent = totalPages;
+            lastBtn.onclick = () => changePage(totalPages);
+            pagination.appendChild(lastBtn);
+        }
+
+        // Next button
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = 'Sau';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => changePage(currentPage + 1);
+        pagination.appendChild(nextBtn);
+    }
+
+    function changePage(page) {
+        const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderProducts();
+        }
+    }
+
+    function searchProducts() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        filteredProducts = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm)
+        );
+        currentPage = 1;
+        renderProducts();
+    }
+
+    function editProduct(id) {
+        alert(`Chỉnh sửa sản phẩm ID: ${id}`);
+    }
+
+    function viewProduct(id) {
+        alert(`Xem chi tiết sản phẩm ID: ${id}`);
+    }
+
+    function deleteProduct(id) {
+        if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+            const index = products.findIndex(p => p.id === id);
+            if (index > -1) {
+                products.splice(index, 1);
+                searchProducts();
+                alert('Sản phẩm đã được xóa thành công!');
+            }
+        }
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('input', searchProducts);
+
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.product-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+
+    // Initialize
+    renderProducts();
+</script>
+</body>
+</html>

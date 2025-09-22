@@ -43,7 +43,7 @@ class CourseController {
     }
     // tao khoa hoc
     create(req, res, next) {
-        res.render('./course/create');
+        res.render('./course/create.');
     }
 
     async store(req, res, next) {

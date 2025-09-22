@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ Bán Hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+<!-- Product Grid -->
+<section class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Sản Phẩm Nổi Bật</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <% for(let i = 1; i <= 8; i++) { %>
+            <a href="/product/<%= i %>" class="bg-white rounded-lg shadow hover:shadow-lg transition duration-300">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ20FL4MMqO4zGO8vDnI1C7nDEmfGpKdUw05w&s" alt="Sản phẩm <%= i %>" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold">Sản Phẩm <%= i %></h3>
+                    <p class="text-gray-600">Mô tả ngắn về sản phẩm <%= i %>.</p>
+                    <p class="text-blue-600 font-bold mt-2"><%= 100 * i %>.000 VNĐ</p>
+                </div>
+            </a>
+        <% } %>
+    </div>
+</section>
+</body>
+</html>

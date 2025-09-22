@@ -1,25 +1,23 @@
 const express = require('express/lib/express');
 
-const newRouter = require('./news');
-
-const courseRouter = require('./course');
-
 const siteRouter = require('./site');
 
-const sellRouter = require('./sell');
+const adminRouter = require('./admin');
+const categoryRouter = require('./category');
+const productRouter = require('./product');
+const brandRouter = require('./brand');
 
-const meRouter = require('./me');
 
 function route(app) {
-    app.use('/news', newRouter);
 
-    app.use('/course', courseRouter);
 
-    app.use('/me', meRouter);
-
-    app.use('/sell', sellRouter);
-
+    app.use('/admin', adminRouter);
+    app.use('/admin/categories', categoryRouter);
+    app.use('/admin/products', productRouter);
+    app.use('/admin/brand', brandRouter);
+    app.use('/customer', adminRouter);
     app.use('/', siteRouter);
+
 }
 
 module.exports = route;
